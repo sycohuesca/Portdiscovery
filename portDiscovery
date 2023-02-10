@@ -1,0 +1,19 @@
+#!/bin/bash
+
+function ctrl_c(){
+        echo -e "\n[!] Saliendo ...\n"
+        exit 1
+}
+
+# Ctrl+C
+trap ctrl_c SIGINT
+
+if [ $1 ];then
+
+        for port in $(seq 1 65535); do
+                timeout 1 bash -c "echo '' > /dev/tcp/$1/$port" &>/dev/null && echo "[+] Port $port => $1:$i -Open" &
+        done; wait
+else
+        echo -e "\n [!] Error de formato $0 IP"
+        exit 1
+fi
